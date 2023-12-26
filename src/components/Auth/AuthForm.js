@@ -12,6 +12,7 @@ const AuthForm = () => {
   };
 
   const clickHandler = () =>{
+    alert("email.exists");
     setLogin(false);
     setIsLogin(false);
   }
