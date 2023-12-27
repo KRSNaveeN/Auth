@@ -24,12 +24,16 @@ const passwordref = useRef();
 
 
     // if required u can add your validation for password and email
-    if(isLogin)
+    let url ="";
+    if(!isLogin)
     {
-
+      url = "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyA9LuFmZhMIPUovdM8bJy2Yie2vBx5_3d0"
     }
     else{
-      fetch("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyA9LuFmZhMIPUovdM8bJy2Yie2vBx5_3d0", {
+      url="https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyA9LuFmZhMIPUovdM8bJy2Yie2vBx5_3d0"
+    }
+    
+      fetch(url, {
         method : 'POST',
         body : JSON.stringify( {
           email: enteredemail,
@@ -40,25 +44,30 @@ const passwordref = useRef();
           'Content-Type':'application/json'
         }
       }).then((res)=> 
-      
+          
       {
         setIsLoading(false);
         if(res.ok){
+          res.json().then((data)=>{
+            console.log(data);
+          })
+          
         //  
         }
         else{
-          // let ans  = "authentication failed"
+          let ans  = "authentication failed"
           res.json().then((data)=>{
-          let ans = data.error.message;
+           ans = data.error.message;
           alert(ans);
-          console.log(ans);
+         
         })
+        console.log(ans);
         }
       }
         )
         
         
-    }
+    
   }
 
 
