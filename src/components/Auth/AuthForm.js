@@ -1,11 +1,12 @@
-import { useState, useRef } from 'react';
+import { useState, useRef,useContext } from 'react';
 
 import classes from './AuthForm.module.css';
+import AuthContext from '../../store/AuthContext';
 
 const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setIsLoading] = useState(false);
-  
+  const ctx = useContext(AuthContext);
 const emailref = useRef();
 const passwordref = useRef();
 
@@ -48,25 +49,30 @@ const passwordref = useRef();
       {
         setIsLoading(false);
         if(res.ok){
-          res.json().then((data)=>{
-            console.log(data);
-          })
+          // res.json().then((data)=>{
+          //   console.log(data);
+          return res.json()
+          // }
+          // )
           
         //  
         }
         else{
-          let ans  = "authentication failed"
-          res.json().then((data)=>{
-           ans = data.error.message;
-          alert(ans);
+          // let ans  = "authentication failed"
+          // res.json().then((data)=>{
+          //  ans = data.error.message;
+          // alert(ans);
+          let errormsg= "Authentication failed"
+          
+          throw new Error(errormsg);
+          
          
-        })
-        console.log(ans);
-        }
-      }
-        )
+        }}).then((data)=>{
+          ctx.login(data.idToken);
+          console.log(data)}).catch((err)=>{alert(err);console.log(err)})
         
-        
+        emailref.current.value = "";
+        passwordref.current.value = "";
     
   }
 
