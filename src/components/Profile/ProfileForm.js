@@ -1,4 +1,4 @@
-import { useContext,useRef } from 'react';
+import { useContext,useRef , useEffect} from 'react';
 import classes from './ProfileForm.module.css';
 import AuthContext from '../../store/AuthContext';
 
@@ -7,6 +7,24 @@ import AuthContext from '../../store/AuthContext';
 const ProfileForm = () => {
   const ctx = useContext(AuthContext);
 const passwordref = useRef();
+
+useEffect(()=>{
+  console.log("started running...");
+  let remains =Date.now() -localStorage.getItem("timer");
+  if((10000-remains)>0)
+  {
+    let tim = setTimeout(()=>{ctx.autodelete()}, (10000 - remains));
+  }
+  else
+  {
+    ctx.autodelete();
+  }
+
+  
+  
+  // ctx.autodelete();
+  // return if((10000-remains)>0){   clearTimeout(tim)};
+},[])
 
 const submitHandler = (e)=>{
   e.preventDefault();
