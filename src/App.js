@@ -4,8 +4,13 @@ import Layout from './components/Layout/Layout';
 import UserProfile from './components/Profile/UserProfile';
 import AuthPage from './pages/AuthPage';
 import HomePage from './pages/HomePage';
+import { useContext } from 'react';
+import AuthContext from './store/AuthContext';
+import { Redirect } from 'react-router-dom/cjs/react-router-dom';
 
 function App() {
+
+  let ctx = useContext(AuthContext);
   return (
     <>
     <div>hello</div>
@@ -14,12 +19,16 @@ function App() {
         <Route path='/' exact>
           <HomePage />
         </Route>
-        <Route path='/auth'>
+        {!ctx.isLoggedIn && <Route path='/auth'>
           <AuthPage />
-        </Route>
-        <Route path='/profile'>
+        </Route>}
+        {
+          ctx.isLoggedIn && <Route path='/profile'>
           <UserProfile />
         </Route>
+        }
+        <Route to='*'> <Redirect to='/'/></Route>
+        {/* learn about useHistory hook and redirect ,switch and exact */}
       </Switch>
     </Layout>
     </>

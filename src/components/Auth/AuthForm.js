@@ -68,6 +68,7 @@ const passwordref = useRef();
           
          
         }}).then((data)=>{
+          // localStorage.setItem(data.LocalId, data.idToken)
           ctx.login(data.idToken);
           console.log(data)}).catch((err)=>{alert(err);console.log(err)})
         
