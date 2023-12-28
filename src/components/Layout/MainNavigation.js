@@ -24,6 +24,7 @@ const MainNavigation = () => {
         </li>
          }
           {isLoggedIn && <li>
+
             <button onClick={ctx.logout}><Link to='/auth'>Logout</Link></button>
           </li>}
         </ul>
